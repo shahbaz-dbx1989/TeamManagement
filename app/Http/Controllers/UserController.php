@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveUser;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -13,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = \App\User::all();
+        return view ('web.users.index',['users'=>$users]);
     }
 
     /**
@@ -23,7 +26,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('web.users.create');
+        $teams = \App\Team::all();
+        return view('web.users.create',['teams'=>$teams]);
     }
 
     /**
@@ -32,9 +36,32 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveUser $request)
     {
-        //
+        $user = new \App\User;
+        $user->first_name = $request->get('first_name');
+        $user->last_name = $request->get('last_name');
+        $teams = $request->get('teams');
+        
+        //saving email and password just dummy , 
+        //as not removed the columns because may be we 
+        // need to do the task further
+        $user->email = Str::random(8) . '@yahoo.com';
+        $user->password = bcrypt('password123');
+
+        if($user->save())
+        {
+            $user->teams()->sync($teams);            
+            return redirect()
+            ->route('users.create')
+            ->with('message', $user->first_name . ' is created!');            
+        }
+        else
+        {
+            $errors = $user->getErrors();
+            return redirect()->route('users.create')->with('errors', $errors)->withInput(); 
+        }
+
     }
 
     /**

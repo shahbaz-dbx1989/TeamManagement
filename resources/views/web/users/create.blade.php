@@ -25,33 +25,50 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Create User</h2>
+
+                 @if(Session::has('message'))
+                        <div class="alert alert-success">
+                          {{Session::get('message')}}
+                        </div>
+                    @elseif($errors->count()>0)
+                        <div class="alert alert-danger">
+                            @foreach($errors->all() as $error)
+                            {{ $error }}
+                            <br/>
+                            @endforeach
+                        </div>
+                    @elseif(Session::has('error'))
+                        <div class="alert alert-danger">
+                            {{Session::get('error')}}
+                        </div>
+                    @endif       
             </div>
         </div>
 
         <div class="row">
-                <form>
-
+                <form method="Post" action = "{{ route('users.store') }}">
+                     {{ csrf_field() }}
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">First Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="First Name">
+                            <label for="first_name">First Name</label>
+                            <input type="text" class="form-control" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required autofocus>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Last Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Last Name">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control" name="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required="">
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">Select Multiple Teams</label>
+                        <label for="teams">Select Multiple Teams</label>
                         <div class="checkbox">
-                            <label><input type="checkbox"> Check me out</label>
-                            <label><input type="checkbox"> Check me out</label>
-                            <label><input type="checkbox"> Check me out</label>
-                            <label><input type="checkbox"> Check me out</label>
+                            @foreach($teams as $team)
+                            <label><input type="checkbox" name="teams[]" value="{{ $team->id }}">{{ $team->name}}</label>
+                            @endforeach
+                            
                         </div>
                     </div>
 

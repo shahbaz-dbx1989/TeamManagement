@@ -85,7 +85,7 @@
                 <div class="links">
                     <a href="{{ route('teams.create') }}">Create Team</a>
                     <a href="{{ route('users.create') }}">Create User</a>
-                    <a href="https://laravel-news.com">All Users</a>
+                    <a href="{{ route('users.index') }}">All Users</a>
                 
                 </div>
             </div>
