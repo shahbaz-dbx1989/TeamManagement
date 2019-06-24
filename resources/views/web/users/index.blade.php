@@ -25,7 +25,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h2>Listing Table</h2>
+                <h2>All Users</h2>
             </div>
         </div>
 
@@ -43,36 +43,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($users as $user)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <th scope="row">{{ $user->id }}</th>
+                                <td>{{ $user->first_name }}</td>
+                                <td>{{ $user->last_name }}</td>
+                                <td>{{ implode (", ", $user->teams()->pluck('name')->toArray()) }}</td>
                                 <td>
                                     <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
                                     <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>
-                                    <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>
-                                    <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                                </td>
-                            </tr>
+                            @endforeach                           
                         </tbody>
                     </table>
                 </div>
