@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::resource('users','UserController');
+Route::get('teams/create', 'TeamController@create')->name('teams.create');
+Route::post('teams','TeamController@store')->name('teams.store');
