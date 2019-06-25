@@ -47,8 +47,15 @@
                             <tr>
                                 <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->first_name }}</td>
-                                <td>{{ $user->last_name }}</td>
-                                <td>{{ implode (", ", $user->teams()->pluck('name')->toArray()) }}</td>
+                                <td>{{ $user->last_name }}</td>                            
+                                <td>
+                                @foreach($user->teams as $team)
+                                {{ $team->name}} 
+                                @if(!$loop->last)
+                                ,
+                                @endif
+                                @endforeach
+                                </td>
                                 <td>
                                     <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
                                     <a href="#"><span class="glyphicon glyphicon-trash"></span></a>

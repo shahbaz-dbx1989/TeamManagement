@@ -15,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = \App\User::all();
+        $users = \App\User::with('teams')->get();
+        //return $users;
         return view ('web.users.index',['users'=>$users]);
     }
 
